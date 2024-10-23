@@ -1,20 +1,17 @@
 package ru.hogwarts.school.service;
 
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface FacultyService {
-    Faculty getFaculty(Long id);
-
     Faculty createFaculty(Faculty faculty);
 
-    Faculty editFaculty(Long id, Faculty faculty);
+    Faculty findFaculty(long id);
 
-    void deleteFaculty(Long id);
+    Faculty editFaculty(Faculty faculty);
 
-    List<Faculty> findAll(String name, String color);
+    void deleteFaculty(long id);
 
-    List<Student> getStudents(Long facultyId);
+    Collection<Faculty> findByColor(String color);
 }
