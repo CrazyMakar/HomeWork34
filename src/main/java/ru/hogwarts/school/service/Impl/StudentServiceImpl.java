@@ -47,4 +47,20 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id);
         return student.getFaculty();
     }
+
+    public Integer getAllByCount () {
+        return studentRepository.getAllByCount();
+    }
+
+    public  Integer getAvgAgeStudents () {
+        return studentRepository.getAvgAgeStudents();
+    }
+
+    public List <Student> getStudentGroupById () {
+        return studentRepository.getStudentGroupById();
+    }
+
+    public List <Student> getStudentsByName (String name) {
+        return studentRepository.getStudentsByName(name);
+    }
 }
