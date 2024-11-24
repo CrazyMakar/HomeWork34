@@ -87,4 +87,18 @@ public class StudentController {
         }
         return ResponseEntity.ok(students);
     }
+
+    @GetMapping ("/filterByName")
+    public ResponseEntity<Collection<String>> filterByName() {
+        List <String> filter = studentService.filterByName();
+        if (filter == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(filter);
+    }
+    @GetMapping ("/filterAvgAge")
+    public ResponseEntity<Double> filterByAvg() {
+        Double filter = studentService.filterByAvg();
+        return ResponseEntity.ok(filter);
+    }
 }

@@ -28,4 +28,6 @@ public interface StudentService {
     List<Student> getStudentGroupById ();
 
     List <Student> getStudentsByName(String name);
+    List<String> filterByName ();
+    Double filterByAvg ();
 }

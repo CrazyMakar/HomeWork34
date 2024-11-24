@@ -65,4 +65,16 @@ public class FacultyController {
     public Set<Student> getFacultyByStudent(@PathVariable Long id) {
         return facultyService.findFaculty(id).getStudents();
     }
+
+    @GetMapping("/lengthName")
+    public ResponseEntity<String> getLengthName() {
+        String lengthName = facultyService.getLengthName();
+        return ResponseEntity.ok(lengthName);
+    }
+
+    @GetMapping("/task")
+    public ResponseEntity<Integer> getAnswerByTask() {
+        Integer answer = facultyService.getAnswerByTask();
+        return ResponseEntity.ok(answer);
+    }
 }
