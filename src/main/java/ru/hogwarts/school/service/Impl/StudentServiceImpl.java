@@ -12,6 +12,7 @@ import ru.hogwarts.school.service.StudentService;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -72,45 +73,91 @@ public class StudentServiceImpl implements StudentService {
         return student.getFaculty();
     }
 
-    public Integer getAllByCount () {
+    public Integer getAllByCount() {
         final Integer allByCount = studentRepository.getAllByCount();
         logger.info("All students found");
         return allByCount;
     }
 
-    public  Integer getAvgAgeStudents () {
+    public Integer getAvgAgeStudents() {
         final Integer avgAgeStudents = studentRepository.getAvgAgeStudents();
         logger.info("The average age of students was obtained");
         return avgAgeStudents;
     }
 
-    public List <Student> getStudentGroupById () {
+    public List<Student> getStudentGroupById() {
         final List<Student> studentGroupById = studentRepository.getStudentGroupById();
         logger.info("Grouping students by id is complete");
         return studentGroupById;
     }
 
-    public List <Student> getStudentsByName (String name) {
+    public List<Student> getStudentsByName(String name) {
         final List<Student> studentsByName = studentRepository.getStudentsByName(name);
         logger.info("The students found");
         return studentsByName;
     }
 
-    public List<String> filterByName () {
-        return studentRepository.findAll()
-                .stream()
-                .parallel()
-                .filter(i -> i.getName().startsWith ("А"))
-                .map (i->i.getName().toUpperCase())
-                .sorted()
-                .toList();
+    public List<String> filterByName() {
+        return studentRepository.findAll().stream().parallel().filter(i -> i.getName().startsWith("А")).map(i -> i.getName().toUpperCase()).sorted().toList();
     }
 
-    public Double filterByAvg () {
-        return studentRepository.findAll()
-                .stream()
-                .parallel()
-                .mapToDouble (Student :: getAge)
-                .average().orElseThrow();
+    public Double filterByAvg() {
+        return studentRepository.findAll().stream().parallel().mapToDouble(Student::getAge).average().orElseThrow();
+    }
+
+    public Integer count = 1;
+
+    public void parallelName() {
+        List<String> names = getNamesStudents();
+
+        System.out.println(count + " " + names.get(0));
+        count++;
+        System.out.println(count + " " + names.get(1));
+        count++;
+        new Thread(() -> {
+            System.out.println(count + " " + names.get(2));
+            count++;
+            System.out.println(count + " " + names.get(3));
+            count++;
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(count + " " + names.get(4));
+            count++;
+            System.out.println(count + " " + names.get(5));
+            count++;
+        }).start();
+    }
+
+    public List<String> getNamesStudents() {
+        return studentRepository.findAll().stream().map(Student::getName).collect(Collectors.toList());
+    }
+
+
+    public void synchronizedName() {
+        List<String> names = getNamesStudents();
+
+        synchronized (StudentService.class) {
+            System.out.println(count + " " + names.get(0));
+            count++;
+            System.out.println(count + " " + names.get(1));
+            count++;
+        }
+
+        synchronized (StudentService.class) {
+            new Thread(() -> {
+                System.out.println(count + " " + names.get(2));
+                count++;
+                System.out.println(count + " " + names.get(3));
+                count++;
+            }).start();
+        }
+        synchronized (StudentService.class) {
+            new Thread(() -> {
+                System.out.println(count + " " + names.get(4));
+                count++;
+                System.out.println(count + " " + names.get(5));
+            }).start();
+        }
     }
 }

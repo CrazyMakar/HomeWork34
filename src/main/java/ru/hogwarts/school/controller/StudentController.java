@@ -64,41 +64,52 @@ public class StudentController {
         return studentService.getById(id);
     }
 
-    @GetMapping ("/studentCount")
-    public Integer getAllByCount () {
+    @GetMapping("/studentCount")
+    public Integer getAllByCount() {
         return studentService.getAllByCount();
     }
 
-    @GetMapping ("/avgAge")
-    public Integer getAvgAgeStudents () {
+    @GetMapping("/avgAge")
+    public Integer getAvgAgeStudents() {
         return studentService.getAvgAgeStudents();
     }
 
-    @GetMapping ("/GroupById")
-    public List <Student> getStudentGroupById () {
+    @GetMapping("/GroupById")
+    public List<Student> getStudentGroupById() {
         return studentService.getStudentGroupById();
     }
 
-    @GetMapping ("/name/{name}")
-    public ResponseEntity<List <Student>> getStudentsByName (@PathVariable String name) {
-        List <Student> students = studentService.getStudentsByName(name);
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Student>> getStudentsByName(@PathVariable String name) {
+        List<Student> students = studentService.getStudentsByName(name);
         if (students == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping ("/filterByName")
+    @GetMapping("/filterByName")
     public ResponseEntity<Collection<String>> filterByName() {
-        List <String> filter = studentService.filterByName();
+        List<String> filter = studentService.filterByName();
         if (filter == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(filter);
     }
-    @GetMapping ("/filterAvgAge")
+
+    @GetMapping("/filterAvgAge")
     public ResponseEntity<Double> filterByAvg() {
         Double filter = studentService.filterByAvg();
         return ResponseEntity.ok(filter);
+    }
+
+    @GetMapping("/print-parallel")
+    public void parallelName() {
+        studentService.parallelName();
+    }
+
+    @GetMapping("/print-synchronized")
+    public void synchronizedName() {
+        studentService.synchronizedName();
     }
 }
