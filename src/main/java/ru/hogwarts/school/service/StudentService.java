@@ -21,11 +21,19 @@ public interface StudentService {
 
     Collection<Student> findByAgeBetween(int min, int max);
 
-    Integer getAllByCount ();
+    Integer getAllByCount();
 
-    Integer getAvgAgeStudents ();
+    Integer getAvgAgeStudents();
 
-    List<Student> getStudentGroupById ();
+    List<Student> getStudentGroupById();
 
-    List <Student> getStudentsByName(String name);
+    List<Student> getStudentsByName(String name);
+
+    List<String> filterByName();
+
+    Double filterByAvg();
+
+    void parallelName();
+
+    void synchronizedName();
 }

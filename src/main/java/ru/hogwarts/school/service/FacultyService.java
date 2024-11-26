@@ -14,4 +14,8 @@ public interface FacultyService {
     void deleteFaculty(long id);
 
     Collection<Faculty> findByColor(String color);
+
+    String getLengthName();
+
+    Integer getAnswerByTask();
 }
